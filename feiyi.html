@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>辽宁非遗 - 传统文化精品</title>
+    <style>
+        /* 中国风古朴风格样式 */
+        :root {
+            --chinese-red: #9e2a2b;
+            --chinese-gold: #e6b89c;
+            --chinese-black: #1b1b1b;
+            --chinese-brown: #85603f;
+            --chinese-bg: #f9ebd7;
+            --chinese-green: #5e7340;
+            --chinese-blue: #3a5683;
+            --chinese-yellow: #c3a343;
+        }
+        
+        body {
+            background-color: var(--chinese-bg);
+            color: var(--chinese-black);
+            font-family: "楷体", "KaiTi", "STKaiti", serif;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="%23e6b89c" stroke-width="0.5" opacity="0.3"/></svg>');
+            margin: 0;
+            padding: 0;
+        }
+        
+        .banner {
+            position: relative;
+            background-color: var(--chinese-red);
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+        }
+        
+        .banner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.3));
+            z-index: 1;
+        }
+        
+        .banner .content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .chinese-border {
+            border: 2px solid var(--chinese-gold);
+            box-shadow: 0 0 15px rgba(230, 184, 156, 0.3);
+            padding: 15px;
+            position: relative;
+            margin: 20px 0;
+        }
+        
+        .chinese-border::before {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 1px solid var(--chinese-gold);
+            pointer-events: none;
+        }
+        
+        .chinese-title {
+            color: var(--chinese-red);
+            font-weight: bold;
+            text-align: center;
+            position: relative;
+            padding: 10px 0;
+            font-size: 1.8em;
+        }
+        
+        .chinese-subtitle {
+            color: var(--chinese-brown);
+            text-align: center;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .section {
+            margin: 40px 0;
+            padding: 20px;
+        }
+        
+        /* 装饰元素 */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            margin: 30px 0;
+        }
+        
+        .section-divider::before,
+        .section-divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid var(--chinese-gold);
+        }
+        
+        .section-divider-icon {
+            padding: 0 10px;
+            color: var(--chinese-red);
+            font-size: 1.2em;
+        }
+        
+        .chinese-pattern {
+            height: 30px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path d="M20 0 L40 20 L20 40 L0 20 Z" fill="none" stroke="%239e2a2b" stroke-width="1"/></svg>');
+            background-repeat: repeat-x;
+            margin: 20px 0;
+        }
+        
+        .chinese-cloud {
+            height: 30px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="30" viewBox="0 0 100 30"><path d="M10,25 Q20,5 30,15 Q40,25 50,15 Q60,5 70,15 Q80,25 90,15" fill="none" stroke="%23854442" stroke-width="1"/></svg>');
+            background-repeat: repeat-x;
+            margin: 20px 0;
+        }
+        
+        .chinese-seal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+            background-color: var(--chinese-red);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            transform: rotate(15deg);
+            opacity: 0.8;
+            z-index: 10;
+        }
+        
+        .chinese-seal::before {
+            content: "非遗精品";
+            transform: rotate(-15deg);
+        }
+        
+        /* 卡片样式 */
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .card {
+            flex: 1;
+            min-width: 280px;
+            background-color: rgba(249, 235, 215, 0.7);
+            border: 1px solid var(--chinese-gold);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .card-image {
+            height: 200px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            border-bottom: 1px solid var(--chinese-gold);
+        }
+        
+        .card-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .card-content {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card-title {
+            font-weight: bold;
+            margin: 8px 0;
+            font-size: 1.1em;
+            color: var(--chinese-black);
+        }
+        
+        .card-category {
+            color: var(--chinese-red);
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        
+        .card-description {
+            color: var(--chinese-brown);
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        
+        .card-price {
+            margin: 5px 0 10px 0;
+            font-weight: bold;
+        }
+        
+        .button {
+            background-color: var(--chinese-red);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            border-radius: 4px;
+            margin-top: auto;
+        }
+        
+        .button:hover {
+            background-color: var(--chinese-gold);
+            color: var(--chinese-black);
+        }
+        
+        /* 传承人卡片 */
+        .master-card {
+            display: flex;
+            margin: 30px 0;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid var(--chinese-gold);
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .master-card .avatar {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-right: 1px solid var(--chinese-gold);
+        }
+        
+        .master-card .info {
+            padding: 15px;
+            flex: 1;
+        }
+        
+        .master-card .name {
+            font-size: 1.5em;
+            color: var(--chinese-red);
+            border-bottom: 1px solid var(--chinese-gold);
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .master-card .skill {
+            font-size: 1.1em;
+            color: var(--chinese-brown);
+            margin-bottom: 10px;
+        }
+        
+        .master-card .description {
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+        
+        /* 板块样式 */
+        .section-title-area {
+            text-align: center;
+            margin: 30px auto;
+            position: relative;
+            padding-bottom: 20px;
+            max-width: 800px;
+        }
+        
+        .section-title-area .chinese-subtitle {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+            padding: 0 30px;
+        }
+        
+        .section-title-area .chinese-subtitle::before,
+        .section-title-area .chinese-subtitle::after {
+            content: "•";
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--chinese-gold);
+        }
+        
+        .section-title-area .chinese-subtitle::before {
+            left: 10px;
+        }
+        
+        .section-title-area .chinese-subtitle::after {
+            right: 10px;
+        }
+        
+        .section-title-area .chinese-title {
+            font-size: 2em;
+            font-weight: bold;
+            position: relative;
+            display: inline-block;
+            margin-bottom: 15px;
+            letter-spacing: 3px;
+            padding: 5px 15px;
+        }
+        
+        .section-title-area .chinese-title::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 10px;
+            height: 10px;
+            border-top: 2px solid var(--chinese-gold);
+            border-left: 2px solid var(--chinese-gold);
+        }
+        
+        .section-title-area .chinese-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 10px;
+            height: 10px;
+            border-bottom: 2px solid var(--chinese-gold);
+            border-right: 2px solid var(--chinese-gold);
+        }
+        
+        .title-decoration {
+            margin: 15px auto 0;
+            width: 120px;
+            height: 15px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="15" viewBox="0 0 100 15"><path d="M10,7.5 L20,2 L30,7.5 L40,2 L50,7.5 L60,2 L70,7.5 L80,2 L90,7.5" fill="none" stroke="%239e2a2b" stroke-width="1"/></svg>');
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        
+        .traditional-wrapper {
+            background-color: rgba(249, 235, 215, 0.8);
+            border: 1px solid var(--chinese-brown);
+            padding: 20px;
+            position: relative;
+            margin: 30px 0;
+        }
+        
+        .traditional-wrapper::before {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 1px dashed var(--chinese-gold);
+            pointer-events: none;
+        }
+        
+        /* 各板块差异化样式 */
+        .master-section .traditional-wrapper {
+            background-image: linear-gradient(to bottom, rgba(249, 235, 215, 0.9), rgba(249, 235, 215, 0.7));
+        }
+        
+        .custom-section .traditional-wrapper {
+            border-radius: 15px;
+            background-image: linear-gradient(to right, rgba(249, 235, 215, 0.8), rgba(230, 184, 156, 0.2));
+        }
+        
+        .popular-section .traditional-wrapper {
+            border-radius: 0 20px 0 20px;
+            background-image: linear-gradient(45deg, rgba(249, 235, 215, 0.9), rgba(249, 235, 215, 0.6));
+        }
+        
+        /* 响应式布局 */
+        @media (max-width: 768px) {
+            .cards {
+                flex-direction: column;
+            }
+            
+            .master-card {
+                flex-direction: column;
+            }
+            
+            .master-card .avatar {
+                width: 100%;
+                max-height: 200px;
+                border-right: none;
+                border-bottom: 1px solid var(--chinese-gold);
+            }
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: var(--chinese-black);
+            color: var(--chinese-bg);
+            padding: 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部 Banner -->
+    <div class="banner">
+        <div class="content">
+            <div class="chinese-subtitle">辽宁省非物质文化遗产</div>
+            <h1 class="chinese-title" style="color: white;">传承千年匠心 · 非遗文化精品展</h1>
+            <p>弘扬传统文化，守护非遗技艺</p>
+        </div>
+    </div>
+    
+    <div class="container">
+        <!-- 第一板块：传承人推荐 -->
+        <section class="section master-section" id="masters">
+            <div class="section-divider">
+                <span class="section-divider-icon">✦</span>
+            </div>
+            
+            <div class="section-title-area">
+                <div class="chinese-subtitle">技艺匠人</div>
+                <div class="chinese-title">辽宁省传承人推荐</div>
+                <div class="title-decoration"></div>
+            </div>
+            
+            <div class="chinese-cloud"></div>
+            
+            <div class="traditional-wrapper">
+                <div class="chinese-seal"></div>
+                
+                <!-- 传承人1 -->
+                <div class="master-card">
+                    <img src="images/wc/红衣服.png" alt="传承人作品" class="avatar">
+                    <div class="info">
+                        <div class="name">张明德</div>
+                        <div class="skill">辽宁剪纸技艺传承人</div>
+                        <div class="description">
+                            张明德，辽宁省级非物质文化遗产代表性传承人，从事剪纸艺术创作40余年，作品曾多次获得国家级奖项。其剪纸技法融合了辽宁地方特色，以精湛的刀工和独特的构图著称，作品多表现东北民俗风情和自然景观。
+                            <br><br>
+                            张明德的剪纸艺术注重传统与创新的结合，擅长运用阴刻、阳刻等多种技法，将辽宁地区的历史文化、民间传说和自然风光融入作品中。
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 传承人1作品 -->
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="images/wc/袋子.png" alt="剪纸作品">
+                        </div>
+                        <div class="card-content">
+                            <div class="card-category">代表作品</div>
+                            <div class="card-title">《东北农家喜》剪纸艺术</div>
+                            <div class="card-description">纯手工传统剪纸艺术，展现东北农村喜庆场景，色彩鲜艳，构图饱满。</div>
+                            <div class="card-price">￥298</div>
+                            <a class="button">了解详情</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="images/wc/衣服.png" alt="剪纸作品">
+                        </div>
+                        <div class="card-content">
+                            <div class="card-category">经典系列</div>
+                            <div class="card-title">《辽河印象》系列剪纸</div>
+                            <div class="card-description">融合辽宁地域特色的精美剪纸艺术，以辽河流域的自然风光为主题。</div>
+                            <div class="card-price">￥350</div>
+                            <a class="button">了解详情</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 传承人2 -->
+                <div class="master-card" style="margin-top: 40px;">
+                    <img src="images/wc/灰衣服.png" alt="传承人照片" class="avatar">
+                    <div class="info">
+                        <div class="name">李秀芝</div>
+                        <div class="skill">辽宁绢人技艺传承人</div>
+                        <div class="description">
+                            李秀芝，辽宁省级非物质文化遗产代表性传承人，从事绢人制作35年，掌握了传统绢人制作的全部工艺流程。其作品色彩艳丽，形象生动，细节精致，被誉为"指尖上的艺术"。作品多表现民间生活场景和历史人物形象。
+                            <br><br>
+                            李秀芝的绢人制作技艺包括制胎、穿衣、梳头、描绘面容等二十多道工序，每个环节都一丝不苟。
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 传承人2作品 -->
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="images/wc/大衣服.png" alt="绢人作品">
+                        </div>
+                        <div class="card-content">
+                            <div class="card-category">传统工艺</div>
+                            <div class="card-title">《东北秧歌》绢人艺术摆件</div>
+                            <div class="card-description">纯手工打造的绢人艺术品，生动展现东北秧歌表演场景。</div>
+                            <div class="card-price">￥580</div>
+                            <a class="button">了解详情</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="images/wc/htyf.png" alt="绢人作品">
+                        </div>
+                        <div class="card-content">
+                            <div class="card-category">系列作品</div>
+                            <div class="card-title">《辽宁风情》绢人艺术组合</div>
+                            <div class="card-description">展现辽宁地方特色的绢人艺术品，以辽宁民间生活和传统节日为主题。</div>
+                            <div class="card-price">￥680</div>
+                            <a class="button">了解详情</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <a class="button">查看更多传承人</a>
+            </div>
+        </section>
+        
+        <!-- 第二板块：非遗定制作品 -->
+        <section class="section custom-section" id="custom">
+            <div class="section-divider">
+                <span class="section-divider-icon">✦</span>
+            </div>
+            
+            <div class="section-title-area">
+                <div class="chinese-subtitle">匠心独运</div>
+                <div class="chinese-title">非遗定制作品</div>
+                <div class="title-decoration"></div>
+            </div>
+            
+            <div class="chinese-cloud"></div>
+            
+            <div class="chinese-border" style="text-align: center; padding: 30px;">
+                <img src="images/wc/长征一号.png" alt="非遗定制" style="max-height: 300px; max-width: 100%;">
+                <div style="margin-top: 20px;">
+                    <div class="chinese-subtitle">Personalized Art</div>
+                    <div class="chinese-title">非遗定制 · 属于您的独一无二艺术品</div>
+                    <p>根据您的需求量身定制，传统工艺与现代设计完美结合</p>
+                </div>
+            </div>
+            
+            <div class="traditional-wrapper">
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="images/wc/htjm3.png" alt="定制作品">
+                        </div>
+                        <div class="card-content">
+                            <div class="card-category">私人定制</div>
+                            <div class="card-title">辽宁风格传统纹样雕刻定制印章</div>
+                            <div class="card-description">传统印章工艺，个性化雕刻定制</div>
+                            <div class="card-price">￥388起</div>
+                            <a class="button">立即定制</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="images/wc/htjm2.png" alt="定制作品">
+                        </div>
+                        <div class="card-content">
+                            <div class="card-category">私人定制</div>
+                            <div class="card-title">辽宁传统布艺定制家居装饰</div>
+                            <div class="card-description">融合传统布艺工艺与现代家居美学</div>
+                            <div class="card-price">￥680起</div>
+                            <a class="button">立即定制</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="images/wc/htjm1.png" alt="定制作品">
+                        </div>
+                        <div class="card-content">
+                            <div class="card-category">私人定制</div>
+                            <div class="card-title">辽宁地方风格漆器定制摆件</div>
+                            <div class="card-description">传统漆器工艺，精美绝伦</div>
+                            <div class="card-price">￥1280起</div>
+                            <a class="button">立即定制</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <a class="button">查看更多定制作品</a>
+            </div>
+        </section>
+        
+        <!-- 第三板块：热门非遗 -->
+        <section class="section popular-section" id="popular">
+            <div class="section-divider">
+                <span class="section-divider-icon">✦</span>
+            </div>
+            
+            <div class="section-title-area">
+                <div class="chinese-subtitle">跨越千年</div>
+                <div class="chinese-title">热门非遗</div>
+                <p style="text-align: center; color: var(--chinese-brown);">传承千年技艺，探索辽宁地区最受欢迎的非物质文化遗产</p>
+                <div class="title-decoration"></div>
+            </div>
+            
+            <div class="traditional-wrapper">
+                <div style="position: relative; height: 50px; margin-bottom: 20px;">
+                    <img src="images/wc/Name tag 1.png" alt="非遗标志" style="position: absolute; top: 0; left: 10px; max-width: 120px;">
+                    <img src="images/wc/Name tag 2.png" alt="非遗标志" style="position: absolute; top: 10px; right: 10px; max-width: 120px;">
+                </div>
+                
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="images/wc/card.png" alt="非遗作品">
+                        </div>
+                        <div class="card-content">
+                            <div class="card-category">热门非遗</div>
+                            <div class="card-title">辽宁皮影戏《猴闹天宫》套装</div>
+                            <div class="card-description">传统皮影戏角色套装，附演出说明书</div>
+                            <div class="card-price">￥380</div>
+                            <a class="button">立即购买</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="images/wc/cardkey.png" alt="非遗作品">
+                        </div>
+                        <div class="card-content">
+                            <div class="card-category">热门非遗</div>
+                            <div class="card-title">辽宁铁艺《八卦钥匙扣》精品套装</div>
+                            <div class="card-description">传统铁艺锻造，精美文化礼品</div>
+                            <div class="card-price">￥168</div>
+                            <a class="button">立即购买</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="images/wc/dp.png" alt="非遗作品">
+                        </div>
+                        <div class="card-content">
+                            <div class="card-category">热门非遗</div>
+                            <div class="card-title">辽宁剪纸《四季风情》装饰画</div>
+                            <div class="card-description">传统剪纸工艺，精美装饰画</div>
+                            <div class="card-price">￥298</div>
+                            <a class="button">立即购买</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="images/wc/htlogo2.png" alt="非遗作品">
+                        </div>
+                        <div class="card-content">
+                            <div class="card-category">热门非遗</div>
+                            <div class="card-title">辽宁陶艺《东北风情》茶具套装</div>
+                            <div class="card-description">传统陶艺工艺，精美茶具套装</div>
+                            <div class="card-price">￥580</div>
+                            <a class="button">立即购买</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <a class="button">查看更多非遗作品</a>
+            </div>
+            
+            <div class="chinese-pattern"></div>
+        </section>
+    </div>
+    
+    <footer>
+        <p>辽宁非遗文化传承中心 &copy; 2023 版权所有</p>
+        <p>地址：辽宁省沈阳市和平区文化路123号 | 电话：024-12345678</p>
+    </footer>
+</body>
+
+</html> 
